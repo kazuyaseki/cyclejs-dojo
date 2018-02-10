@@ -1,10 +1,18 @@
-xs
-  .periodic(1000) // ---!---!---!---!---
-  .fold(prev => prev + 1, 0) // 0--1---2---3---4---
-  .map(i => `Seconds elapsed: ${i}`)
-  .subscribe({
+const main = () => {
+  return xs
+    .periodic(1000) // ---!---!---!---!---
+    .fold(prev => prev + 1, 0) // 0--1---2---3---4---
+    .map(i => `Seconds elapsed: ${i}`);
+};
+
+const domDriver = text$ => {
+  text$.subscribe({
     next: str => {
       const elem = document.querySelector("#app");
       elem.textContent = str;
     }
   });
+};
+
+const sink = main();
+domDriver(sink);
