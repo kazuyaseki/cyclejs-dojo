@@ -14,5 +14,14 @@ const domDriver = text$ => {
   });
 };
 
+const logDriver = msg$ => {
+  msg$.subscribe({
+    next: msg => {
+      console.log(msg);
+    }
+  });
+};
+
 const sink = main();
 domDriver(sink);
+logDriver(sink);
