@@ -30,15 +30,21 @@ const logDriver = msg$ => {
 };
 
 const run = (mainFn, drivers) => {
-  const fakeDOMSink = xs.create();
-  const domSource = domDriver(fakeDOMSink);
-  const sinks = mainFn({ DOM: domSource });
-  fakeDOMSink.imitate(sinks.DOM);
-  /*Object.keys(drivers).forEach(key => {
-    if (sinks[key]) {
-      drivers[key](sinks[key]);
-    }
-  });*/
+  const fakeSinks = {};
+  Object.keys(drivers).forEach(key => {
+    fakeSinks[key] = xs.create();
+  });
+
+  const sources = {};
+  Object.keys(drivers).forEach(key => {
+    sources[key] = drivers[key](fakeSinks[key]);
+  });
+
+  const sinks = mainFn(sources);
+
+  Object.keys(sinks).forEach(key => {
+    fakeSinks[key].imitate(sinks[key]);
+  });
 };
 
 run(main, {
