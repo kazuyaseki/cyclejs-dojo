@@ -1,3 +1,7 @@
+import xs from "xstream";
+import fromEvent from "xstream/extra/fromEvent";
+import { run } from "@cycle/run";
+
 const main = sources => {
   const click$ = sources.DOM;
   return {
@@ -17,7 +21,7 @@ const domDriver = text$ => {
       elem.textContent = str;
     }
   });
-  const domSource = xs.fromEvent(document, "click");
+  const domSource = fromEvent(document, "click");
   return domSource;
 };
 
