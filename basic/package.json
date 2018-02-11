@@ -1,0 +1,17 @@
+{
+  "name": "basic",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "@cycle/dom": "^20.1.0",
+    "@cycle/run": "^4.1.0",
+    "xstream": "^11.2.0"
+  },
+  "devDependencies": {
+    "webpack": "^3.11.0"
+  },
+  "scripts": {
+    "build:dev": "webpack --watch"
+  }
+}
