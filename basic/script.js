@@ -25,6 +25,10 @@ const logDriver = msg$ => {
   });
 };
 
-const sink = main();
-domDriver(sink.DOM);
-logDriver(sink.log);
+const run = mainFn => {
+  const sinks = mainFn();
+  domDriver(sinks.DOM);
+  logDriver(sinks);
+};
+
+run(main);
