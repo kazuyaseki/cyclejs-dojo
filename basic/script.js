@@ -3,7 +3,7 @@ import fromEvent from "xstream/extra/fromEvent";
 import { run } from "@cycle/run";
 
 const main = sources => {
-  const click$ = sources.DOM;
+  const click$ = sources.DOM.selectEvents("span", "click");
   return {
     DOM: click$
       .startWith(null)
@@ -43,7 +43,13 @@ const domDriver = obj$ => {
       container.appendChild(element);
     }
   });
-  const domSource = fromEvent(document, "click");
+  const domSource = {
+    selectEvents: function(tagName, eventType) {
+      return fromEvent(document, eventType).filter(
+        ev => ev.target.tagName === tagName.toUpperCase()
+      );
+    }
+  };
   return domSource;
 };
 
