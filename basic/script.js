@@ -10,7 +10,11 @@ const main = sources => {
       .startWith(null)
       .map(() => xs.periodic(1000).fold(prev => prev + 1, 0))
       .flatten()
-      .map(i => h1([span([`Seconds elapsed: ${i}`])])),
+      .map(i =>
+        h1({ style: { backgroundColor: "red" } }, [
+          span([`Seconds elapsed: ${i}`])
+        ])
+      ),
     log: xs.periodic(2000).fold(prev => prev + 1, 0)
   };
 };
