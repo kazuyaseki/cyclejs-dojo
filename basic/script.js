@@ -35,7 +35,7 @@ const main = sources => {
   };
 };
 
-const domDriver = obj$ => {
+const makeDOMDriver = mountSelector => obj$ => {
   function createElement(obj) {
     const element = document.createElement(obj.tagName);
     obj.children.forEach(child => {
@@ -50,7 +50,7 @@ const domDriver = obj$ => {
 
   obj$.subscribe({
     next: obj => {
-      const container = document.querySelector("#app");
+      const container = document.querySelector(mountSelector);
       container.textContent = "";
       const element = createElement(obj);
       container.appendChild(element);
@@ -93,6 +93,6 @@ const run = (mainFn, drivers) => {
 };
 
 run(main, {
-  DOM: domDriver,
+  DOM: makeDOMDriver("#app"),
   log: logDriver
 });
