@@ -2,6 +2,27 @@ import xs from "xstream";
 import fromEvent from "xstream/extra/fromEvent";
 import { run } from "@cycle/run";
 
+function h(tagName, children) {
+  return {
+    tagName: tagName,
+    children: children
+  };
+}
+
+function h1(children) {
+  return {
+    tagName: "H1",
+    children: children
+  };
+}
+
+function span(children) {
+  return {
+    tagName: "SPAN",
+    children: children
+  };
+}
+
 const main = sources => {
   const click$ = sources.DOM.selectEvents("span", "click");
   return {
@@ -9,15 +30,7 @@ const main = sources => {
       .startWith(null)
       .map(() => xs.periodic(1000).fold(prev => prev + 1, 0))
       .flatten()
-      .map(i => ({
-        tagName: "H1",
-        children: [
-          {
-            tagName: "SPAN",
-            children: [`Seconds elapsed: ${i}`]
-          }
-        ]
-      })),
+      .map(i => h1([span([`Seconds elapsed: ${i}`])])),
     log: xs.periodic(2000).fold(prev => prev + 1, 0)
   };
 };
