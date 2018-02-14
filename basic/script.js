@@ -2,6 +2,7 @@ import xs from "xstream";
 import { button, p, label, input, h2, div, makeDOMDriver } from "@cycle/dom";
 import { makeHTTPDriver } from "@cycle/http";
 import { run } from "@cycle/run";
+import isolate from "@cycle/isolate";
 import { html } from "snabbdom-jsx";
 
 const intent = domSource => {
@@ -66,15 +67,10 @@ const main = sources => {
     max: 150,
     init: 40
   });
-  const weightDOMSource = sources.DOM.select(".weight");
-  const weightSinks = labeledSlider({
+  const weightSlider = isolate(labeledSlider, ".weight");
+  const weightSinks = weightSlider({
     ...sources,
-    DOM: weightDOMSource,
     props: weightProps$
-  });
-  const weightVDOM$ = weightSinks.DOM.map(vdom => {
-    vdom.sel += ".weight";
-    return vdom;
   });
 
   const heightProps$ = xs.of({
@@ -82,20 +78,16 @@ const main = sources => {
     unit: "cm",
     min: 140,
     max: 220,
-    init: 140
+    init: 440
   });
-  const heightDOMSource = sources.DOM.select(".height");
-  const heightSinks = labeledSlider({
+  const heightSlider = isolate(labeledSlider, ".height");
+  const heightSinks = heightSlider({
     ...sources,
-    DOM: heightDOMSource,
     props: heightProps$
   });
-  const heightVDOM$ = heightSinks.DOM.map(vdom => {
-    vdom.sel += ".height";
-    return vdom;
-  });
+
   const vdom$ = xs
-    .combine(weightVDOM$, heightVDOM$)
+    .combine(weightSinks.DOM, heightSinks.DOM)
     .map(([weightVDOM, heightVDOM]) => div([weightVDOM, heightVDOM]));
 
   return {
