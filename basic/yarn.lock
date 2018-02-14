@@ -21,6 +21,10 @@
     superagent "3.8.2"
     xstream "11.x"
 
+"@cycle/isolate@^3.2.0":
+  version "3.2.0"
+  resolved "https://registry.yarnpkg.com/@cycle/isolate/-/isolate-3.2.0.tgz#8ffddb9b05cb9a4fbcf812794c0e5285af341051"
+
 "@cycle/run@4.0.0":
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/@cycle/run/-/run-4.0.0.tgz#d48c5133cd783afdf7f9e37ce1c158b570d6c5f1"

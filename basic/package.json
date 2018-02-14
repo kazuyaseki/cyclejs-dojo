@@ -6,6 +6,7 @@
   "dependencies": {
     "@cycle/dom": "^20.1.0",
     "@cycle/http": "^14.9.0",
+    "@cycle/isolate": "^3.2.0",
     "@cycle/run": "^4.1.0",
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.2",
@@ -22,7 +23,9 @@
     "build:dev": "webpack --watch"
   },
   "babel": {
-    "presets": ["es2015"],
+    "presets": [
+      "es2015"
+    ],
     "plugins": [
       "transform-object-rest-spread",
       "syntax-jsx",
