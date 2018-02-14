@@ -86,9 +86,13 @@ const main = sources => {
 
   const vdom$ = xs
     .combine(bmi$, weightSinks.DOM, heightSinks.DOM)
-    .map(([bmi, weightVDOM, heightVDOM]) =>
-      div([weightVDOM, heightVDOM, h2("BMI: " + bmi)])
-    );
+    .map(([bmi, weightVDOM, heightVDOM]) => (
+      <div className="flex mb-4">
+        {weightVDOM}
+        {heightVDOM}
+        <h2>BMI: {bmi}</h2>
+      </div>
+    ));
 
   return {
     DOM: vdom$
