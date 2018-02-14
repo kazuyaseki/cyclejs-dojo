@@ -5,6 +5,8 @@ import { run } from "@cycle/run";
 import isolate from "@cycle/isolate";
 import { html } from "snabbdom-jsx";
 
+import { sliderSettings } from "./settings";
+
 const intent = domSource => {
   const changeValue$ = domSource
     .select(".slider")
@@ -62,30 +64,16 @@ const labeledSlider = sources => {
 };
 
 const main = sources => {
-  const weightProps$ = xs.of({
-    label: "Weight",
-    unit: "kg",
-    min: 40,
-    max: 150,
-    init: 40
-  });
   const weightSlider = isolate(labeledSlider, ".weight");
   const weightSinks = weightSlider({
     ...sources,
-    props: weightProps$
+    props: xs.of(sliderSettings.weight)
   });
 
-  const heightProps$ = xs.of({
-    label: "Height",
-    unit: "cm",
-    min: 140,
-    max: 220,
-    init: 140
-  });
   const heightSlider = isolate(labeledSlider, ".height");
   const heightSinks = heightSlider({
     ...sources,
-    props: heightProps$
+    props: xs.of(sliderSettings.height)
   });
 
   const bmi$ = xs
